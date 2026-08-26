@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ariane Lesnyak · Translation, Localization, SDH & Closed Captions</title>
+<meta name="description" content="Translation, localization, SDH and closed captioning portfolio: case studies in linguistic ethics, accessibility, UI localization and Python automation."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg-a:#0B1D39;--bg-b:#000;--accent:#3183ff;--deep:#0751bf;--white:#fff;--para:#b0c4d9;--muted:#616d7e;--border:rgba(255,255,255,.08);--card:rgba(255,255,255,.02)}
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}
+html{scroll-padding-top:80px}
+body{font-family:Inter,-apple-system,sans-serif;background:var(--bg-b);color:var(--para);line-height:1.8;overflow-x:hidden;font-size:18px;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}ul{list-style:none}
+.container{max-width:1240px;margin:0 auto;padding:0 24px}
+/* nav */
+.navbar{position:fixed;top:0;left:0;width:100%;background:#000;padding:12px 40px;display:flex;justify-content:space-between;align-items:center;z-index:999;border-bottom:1px solid rgba(255,255,255,.04);height:72px;transition:all .3s}
+.logo{display:flex;align-items:center;gap:12px}
+.logo img{width:40px;height:40px;object-fit:contain}
+.nav-links{display:flex;gap:32px}
+.nav-links a{font-size:18px;color:var(--white);position:relative;transition:color .3s}
+.nav-links a:hover{color:var(--accent)}
+/* hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 24px 60px;background:linear-gradient(to bottom,var(--bg-a),#000);position:relative;overflow:hidden}
+.hero-content{position:relative;z-index:5;max-width:900px}
+.hero h1{font-size:clamp(48px,8vw,92px);font-weight:400;line-height:1.03;letter-spacing:-1.4px;color:var(--white);margin-bottom:12px}
+.hero h2{font-size:clamp(24px,3.5vw,38px);font-weight:400;line-height:1.06;letter-spacing:-1px;color:var(--white);margin-bottom:8px}
+.hero p{font-size:18px;color:var(--para);max-width:600px;margin:0 auto 20px}
+.btn{display:inline-block;background-color:#3183ff;background-image:linear-gradient(150deg,transparent,var(--deep));color:var(--white);border:none;border-radius:15px;padding:16px 35px;font-size:18px;cursor:pointer;transition:background-color .4s cubic-bezier(.25,.46,.45,.94),transform .4s cubic-bezier(.25,.46,.45,.94)}
+.btn:hover{background-color:var(--deep);transform:translateY(-3px)}
+.hero .btn{margin-top:30px;opacity:0;animation:fadeBtn 1.2s ease 1.2s forwards}
+@keyframes fadeBtn{to{opacity:1}}
+/* hero 3d blocks */
+.figure{perspective:1300px;transform-style:preserve-3d;display:flex;flex-direction:column;justify-content:center;align-items:center;width:70%;height:400px;position:absolute;bottom:10%;right:0;z-index:1;transform:rotateX(46deg) rotateY(17deg) rotateZ(-3deg);will-change:transform;animation:floatBlocks 12s infinite ease-in-out alternate}
+@keyframes floatBlocks{0%{transform:rotateX(46deg) rotateY(17deg) rotateZ(-3deg) translateY(0)}100%{transform:rotateX(46deg) rotateY(17deg) rotateZ(-3deg) translateY(-30px)}}
+.f1,.f2,.f3{border-radius:16px;background:linear-gradient(135deg,rgba(49,131,255,.15),rgba(7,81,191,.05));border:1px solid rgba(49,131,255,.2);backdrop-filter:blur(4px);will-change:transform;transform-style:preserve-3d;position:absolute}
+.f1{width:100%;height:400px;transform:translate3d(0,0,1.43vh) rotateX(4deg) rotateZ(-17.8deg)}
+.f2{width:90%;height:360px;transform:translate3d(0,0,-16.14vh) rotateX(3.6deg) rotateZ(-11.9deg)}
+.f3{width:60%;height:280px;transform:translate3d(0,0,-38.28vh) rotateX(3.2deg) rotateZ(-5.9deg)}
+/* sections */
+section{padding:80px 24px}
+.sec-head{text-align:center;max-width:900px;margin:0 auto 60px}
+.tag{display:inline-block;border:2px solid rgba(49,131,255,.35);color:var(--accent);letter-spacing:2px;text-transform:uppercase;border-radius:12px;padding:9px 18px;font-size:13px;font-weight:500}
+.sec-head h2{font-size:clamp(36px,5vw,66px);line-height:1.06;letter-spacing:-1px;color:var(--white);margin-top:20px;font-weight:500}
+.sec-head p{font-size:clamp(18px,3vw,38px);line-height:1.1;color:var(--accent);margin-top:16px}
+/* services */
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px 48px;max-width:1240px;margin:0 auto}
+.svc h3{font-size:24px;line-height:1.3;letter-spacing:-.5px;color:var(--white);margin-top:24px;font-weight:500}
+.svc p{font-size:16px;color:var(--muted);margin-top:12px;line-height:1.6}
+/* cases */
+.case-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:1240px;margin:0 auto}
+.case-card{border:1px solid var(--border);background:var(--card);border-radius:18px;padding:28px;display:block;transition:border-color .4s,transform .4s;cursor:pointer}
+.case-card:hover{border-color:var(--accent);transform:translateY(-3px)}
+.case-n{font-size:13px;text-transform:uppercase;letter-spacing:2px;color:var(--accent)}
+.case-card h3{font-size:22px;line-height:1.3;letter-spacing:-.5px;color:var(--white);margin-top:16px;font-weight:500}
+.case-card p{font-size:15px;line-height:1.6;margin-top:12px}
+.open{display:inline-block;margin-top:20px;font-size:16px;color:var(--accent)}
+/* collabs */
+.collab-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:24px;max-width:1100px;margin:0 auto}
+.logo-plate{height:96px;border-radius:12px;background:var(--bg-a);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:filter .4s,transform .4s,opacity .4s;filter:grayscale(1);opacity:.6}
+.logo-plate:hover{filter:grayscale(0);opacity:1;transform:translateY(-4px)}
+.logo-plate img{max-width:80%;max-height:80%;object-fit:contain;filter:brightness(0) invert(1)}
+/* cta */
+.cta{background:linear-gradient(to bottom,var(--bg-a),#000);text-align:center;padding:130px 24px}
+.cta h2{font-size:clamp(30px,4.5vw,52px);line-height:1.1;letter-spacing:-.8px;color:var(--white);font-weight:500}
+.cta .btn{margin-top:64px}
+/* footer */
+footer{border-top:1px solid var(--border);padding:60px 24px;background:#000}
+.footer-in{max-width:1240px;margin:0 auto;display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap}
+.footer-in .max{max-width:380px}
+.footer-in p{font-size:16px;color:var(--muted);margin-top:16px;line-height:1.7}
+.footer-in li{margin-top:4px}
+.footer-in a{font-size:16px;color:var(--muted);transition:color .3s}
+.footer-in a:hover{color:var(--accent)}
+/* modal -> agora âncoras ocultas (expansíveis) */
+.case-expand {
+    display: block;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.6s ease, opacity 0.4s ease, padding 0.4s ease;
+    opacity: 0;
+    padding: 0 2rem;
+    background: rgba(11, 29, 57, 0.5);
+    border-radius: 0 0 18px 18px;
+    border: 1px solid transparent;
+}
+.case-expand.open {
+    max-height: 4000px; /* suficiente para todo o conteúdo */
+    opacity: 1;
+    padding: 2rem;
+    border-color: var(--border);
+}
+.case-body {
+    padding: 1.8rem 2rem;
+}
+.case-body > p {
+    font-size: 0.92rem; color: var(--muted); line-height: 1.8;
+    font-family: 'Inter', sans-serif; margin-bottom: 1.3rem;
+}
+.case-body > p strong { color: var(--white); }
+
+/* quad blocks (dentro do expand) */
+.quad{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px}
+.qbox{border:1px solid var(--border);background:var(--card);border-radius:18px;padding:26px;transition:border-color .4s,transform .4s}
+.qbox:hover{border-color:var(--accent);transform:translateY(-3px)}
+.qbox.is-before{border-left:3px solid #ff6b6b}
+.qbox.is-after{border-left:3px solid #2ed573}
+.qbox.is-before h4{color:#ff6b6b}.qbox.is-after h4{color:#2ed573}
+.qhead{display:flex;align-items:center;gap:12px}
+.qhead svg{width:22px;height:22px;color:var(--accent)}
+.qbox.is-before .qhead svg{color:#ff6b6b}.qbox.is-after .qhead svg{color:#2ed573}
+.qhead h4{font-size:20px;color:var(--white);font-weight:500;letter-spacing:-.5px}
+.qbox p{font-size:16px;line-height:1.65;margin-top:10px}
+.qbox p.code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:15px;color:var(--para)}
+.qbox .note{font-size:14px;color:var(--muted);margin-top:16px}
+@keyframes glitch{0%,92%,100%{transform:translate(0);opacity:.85}94%{transform:translate(-1.5px,1px);opacity:.6}96%{transform:translate(1.5px,-1px);opacity:.95}}
+.glitch{animation:glitch 4.5s infinite ease-in-out}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.rise{animation:rise .9s cubic-bezier(.25,.46,.45,.94) both}
+
+/* metrics bars */
+.metrics{margin-top:24px}
+.bar{margin-top:22px}
+.bar-row{display:flex;justify-content:space-between;font-size:15px;margin-bottom:8px}
+.bar-row b{color:var(--white);font-weight:500}
+.track{height:8px;width:100%;border-radius:999px;background:rgba(255,255,255,.1);overflow:hidden}
+.fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--deep));width:0;transition:width 1.4s cubic-bezier(.25,.46,.45,.94)}
+.modal-back{margin-top:24px}
+
+/* browser frame */
+.bf{border-radius:8px;border:1px solid var(--border);background:#0d1117;overflow:hidden;margin-top:14px}
+.bf-head{display:flex;align-items:center;background:rgba(255,255,255,.04);border-bottom:1px solid var(--border);padding:6px 10px;gap:5px}
+.dot{width:8px;height:8px;border-radius:50%}
+.dot.r{background:#ff5e57}.dot.y{background:#ffbd2e}.dot.g{background:#27c93f}
+.url{flex:1;background:rgba(0,0,0,.4);border-radius:4px;padding:2px 8px;font-size:11px;color:var(--muted);margin-left:6px}
+.bf-body{min-height:150px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:14px;text-align:center}
+.bf-err{color:#ff5e57;font-size:16px;font-weight:700;font-family:ui-monospace,monospace}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner{width:28px;height:28px;border:3px solid rgba(255,255,255,.12);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite;margin:12px 0}
+.bf-btns{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.bf-btns span{border:1px solid #ff5e57;color:#ff5e57;border-radius:6px;padding:3px 10px;font-size:11px;font-family:ui-monospace,monospace}
+.bf-btns.clean span{border-radius:8px;padding:8px 16px;font-size:12px;font-family:inherit}
+.bf-btns.clean .primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.bf-btns.clean .ghost{border-color:var(--border);color:var(--para)}
+.bf-title{font-size:15px;font-weight:700;color:var(--white)}
+.bf-sub{font-size:12px;color:var(--muted);margin-top:4px}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.25,.46,.45,.94),transform .9s cubic-bezier(.25,.46,.45,.94)}
+.reveal.visible{opacity:1;transform:none}
+@media(max-width:1024px){.svc-grid{grid-template-columns:repeat(2,1fr)}.case-grid{grid-template-columns:repeat(2,1fr)}.collab-grid{grid-template-columns:repeat(3,1fr)}.quad{grid-template-columns:1fr}.figure{width:90%;height:300px;bottom:5%}}
+@media(max-width:768px){.nav-links{display:none}.svc-grid,.case-grid{grid-template-columns:1fr}.collab-grid{grid-template-columns:repeat(2,1fr)}.figure{display:none}.navbar{padding:12px 24px}}
+</style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <a class="logo" href="#top"><img src="https://github.com/alc-etimo/global3/blob/main/logo.jfif?raw=true" alt="Ariane Lesnyak logo"/></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#case-studies">Case Studies</a></li>
+    <li><a href="#collaborations">Collaborations</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="hero" id="top">
+  <div class="figure" aria-hidden="true"><div class="f1"></div><div class="f2"></div><div class="f3"></div></div>
+  <div class="hero-content">
+    <h1>Localization that keeps every voice intact</h1>
+    <h2>Translation, localization, SDH and closed captions for global audiences.</h2>
+    <p>The industry moves faster than ever — and language is where speed usually breaks first.</p>
+    <a href="#services" class="btn">Explore the work</a>
+  </div>
+</header>
+
+<section id="about">
+  <div class="sec-head reveal" style="max-width:900px">
+    <span class="tag">About</span>
+    <p style="color:var(--white);font-size:clamp(20px,3vw,28px);line-height:1.4;margin-top:24px">Ten years across streaming platforms, software builds and accessibility programs — translating, captioning and governing terminology so meaning survives the pipeline.</p>
+  </div>
+</section>
+
+<section id="services">
+  <div class="sec-head reveal">
+    <span class="tag">Services</span>
+    <h2>Translation, Localization, SDH/Closed Captions.</h2>
+    <p>End-to-end language work, from source script to shipped build.</p>
+  </div>
+  <div class="svc-grid"><div class="svc reveal" style="transition-delay:0ms">
+      <svg width="46" height="46" viewBox="0 0 46 46" fill="none"><rect x="1" y="1" width="44" height="44" rx="12" stroke="#3183ff" stroke-width="1.5" opacity=".35"/><path d="M13 18h20M13 24h14M13 30h8" stroke="#3183ff" stroke-width="2" stroke-linecap="round"/><circle cx="33" cy="30" r="3.5" stroke="#3183ff" stroke-width="2"/></svg>
+      <h3>Audiovisual Translation</h3><p>Scripted and unscripted content translated for streaming, film and corporate libraries.</p></div><div class="svc reveal" style="transition-delay:70ms">
+      <svg width="46" height="46" viewBox="0 0 46 46" fill="none"><rect x="1" y="1" width="44" height="44" rx="12" stroke="#3183ff" stroke-width="1.5" opacity=".35"/><path d="M13 18h20M13 24h14M13 30h8" stroke="#3183ff" stroke-width="2" stroke-linecap="round"/><circle cx="33" cy="30" r="3.5" stroke="#3183ff" stroke-width="2"/></svg>
+      <h3>Software & UI Localization</h3><p>Menus, tooltips, FAQs and error states localized with glossary and context control.</p></div><div class="svc reveal" style="transition-delay:140ms">
+      <svg width="46" height="46" viewBox="0 0 46 46" fill="none"><rect x="1" y="1" width="44" height="44" rx="12" stroke="#3183ff" stroke-width="1.5" opacity=".35"/><path d="M13 18h20M13 24h14M13 30h8" stroke="#3183ff" stroke-width="2" stroke-linecap="round"/><circle cx="33" cy="30" r="3.5" stroke="#3183ff" stroke-width="2"/></svg>
+      <h3>SDH & Closed Captions</h3><p>Access-first captions that carry sound, speaker identity and dialect intact.</p></div><div class="svc reveal" style="transition-delay:210ms">
+      <svg width="46" height="46" viewBox="0 0 46 46" fill="none"><rect x="1" y="1" width="44" height="44" rx="12" stroke="#3183ff" stroke-width="1.5" opacity=".35"/><path d="M13 18h20M13 24h14M13 30h8" stroke="#3183ff" stroke-width="2" stroke-linecap="round"/><circle cx="33" cy="30" r="3.5" stroke="#3183ff" stroke-width="2"/></svg>
+      <h3>Linguistic QA & LQA</h3><p>Structured error taxonomies, severity scoring and evidence-based vendor feedback.</p></div><div class="svc reveal" style="transition-delay:280ms">
+      <svg width="46" height="46" viewBox="0 0 46 46" fill="none"><rect x="1" y="1" width="44" height="44" rx="12" stroke="#3183ff" stroke-width="1.5" opacity=".35"/><path d="M13 18h20M13 24h14M13 30h8" stroke="#3183ff" stroke-width="2" stroke-linecap="round"/><circle cx="33" cy="30" r="3.5" stroke="#3183ff" stroke-width="2"/></svg>
+      <h3>Terminology Governance</h3><p>Glossaries, style guides and knowledge bases that hold consistency at scale.</p></div><div class="svc reveal" style="transition-delay:350ms">
+      <svg width="46" height="46" viewBox="0 0 46 46" fill="none"><rect x="1" y="1" width="44" height="44" rx="12" stroke="#3183ff" stroke-width="1.5" opacity=".35"/><path d="M13 18h20M13 24h14M13 30h8" stroke="#3183ff" stroke-width="2" stroke-linecap="round"/><circle cx="33" cy="30" r="3.5" stroke="#3183ff" stroke-width="2"/></svg>
+      <h3>AI Output Evaluation</h3><p>Post-editing and annotation pipelines that calibrate models to real human speech.</p></div></div>
+</section>
+
+<section id="case-studies">
+  <div class="sec-head reveal">
+    <span class="tag">Case Studies</span>
+    <h2>Four problems, four systems.</h2>
+    <p>Click a case to expand and read the full analysis.</p>
+  </div>
+  <div class="case-grid">
+
+    <!-- CASE 1 -->
+    <div class="case-card reveal" style="transition-delay:0ms" onclick="toggleCase('case-1')">
+      <span class="case-n">Case 01</span><h3>Fidelity vs. Standardization</h3><p>Keeping dialect and identity intact when automated QA flags regional speech as an error.</p>
+      <span class="open">Open case &darr;</span>
+    </div>
+    <div class="case-expand" id="case-1">
+      <span class="tag" style="margin-bottom:16px;">Case 01 · Linguistic Ethics</span>
+      <h2 style="color:var(--white);font-size:clamp(28px,4vw,44px);">Fidelity vs. Standardization</h2>
+      <p style="margin:16px 0 8px;color:var(--para);">Automated QA kept flagging dialect as error. I built the rules that tell a real mistake apart from a character's voice — without breaking glossary or locale compliance.</p>
+      <div class="tags" style="margin-bottom:24px;"><span class="tag">Localization</span><span class="tag">SDH</span><span class="tag">Terminology Governance</span><span class="tag">Error Analysis</span></div>
+      <div class="quad">
+        <div class="qbox"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Zm0 6v5m0 3v.5"/></svg><h4>Problem</h4></div><p>MT and vendor style rules “corrected” regional speech into neutral English.</p><p>Characters lost their accent, brands got translated, EN-UK drifted into EN-US.</p></div>
+        <div class="qbox"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6m-5 3h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2Z"/></svg><h4>Solution</h4></div><p>Added a Language/Local/Dialect category to the error taxonomy.</p><p>Locale-locked projects, whitelisted regional lexicon, protected named entities.</p><p>Every decision documented so vendors could act on it, not argue about it.</p></div>
+        <div class="qbox is-before"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 9-9M12 7v5l3 2M21 12l-3 3-3-3"/></svg><h4>Before</h4></div><p class="code glitch" style="animation-delay:0.0s">“me grandfather” → “my grandfather”</p><p class="code glitch" style="animation-delay:0.7s">“travelling” → “traveling”</p><p class="code glitch" style="animation-delay:1.4s">“Product X Boards” → “Quadros do Produto X”</p><p class="note">Identity flattened · brand broken</p></div>
+        <div class="qbox is-after"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6M3 19h6"/></svg><h4>After</h4></div><p class="code rise" style="animation-delay:0.0s">“me grandfather” — kept, tagged as dialect</p><p class="code rise" style="animation-delay:0.15s">“travelling” — EN-UK locked</p><p class="code rise" style="animation-delay:0.3s">“Product X Boards” — never translated</p><p class="note">Voice preserved · glossary respected</p></div>
+      </div>
+      <div class="qbox metrics"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10m6 10V4m6 16v-7m-13 7h17"/></svg><h4>Metrics</h4></div><div class="bar"><div class="bar-row"><span>Dialect markers preserved after review</span><b>100%</b></div><div class="track"><div class="fill" data-w="100"></div></div></div><div class="bar"><div class="bar-row"><span>False MT corrections blocked before delivery</span><b>320+</b></div><div class="track"><div class="fill" data-w="92"></div></div></div><div class="bar"><div class="bar-row"><span>Terminology consistency across the title set</span><b>98%</b></div><div class="track"><div class="fill" data-w="98"></div></div></div><div class="bar"><div class="bar-row"><span>Vendor disputes resolved with documented evidence</span><b>All</b></div><div class="track"><div class="fill" data-w="100"></div></div></div></div>
+    </div>
+
+    <!-- CASE 2 -->
+    <div class="case-card reveal" style="transition-delay:80ms" onclick="toggleCase('case-2')">
+      <span class="case-n">Case 02</span><h3>Language Is Access</h3><p>Accessibility-first captions and SDH: sound, speaker identity and reading rate built in from day one.</p>
+      <span class="open">Open case &darr;</span>
+    </div>
+    <div class="case-expand" id="case-2">
+      <span class="tag" style="margin-bottom:16px;">Case 02 · Accessibility</span>
+      <h2 style="color:var(--white);font-size:clamp(28px,4vw,44px);">Language Is Access</h2>
+      <p style="margin:16px 0 8px;color:var(--para);">Captions were treated as transcription. I moved accessibility upstream — sound events, speaker IDs and reading rate designed into the workflow, not patched at QA.</p>
+      <div class="tags" style="margin-bottom:24px;"><span class="tag">Inclusive Communication</span><span class="tag">SDH</span><span class="tag">Audio Description</span><span class="tag">Project Coordination</span></div>
+      <div class="quad">
+        <div class="qbox"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Zm0 6v5m0 3v.5"/></svg><h4>Problem</h4></div><p>Generic “[music]” cues, missing speaker IDs, captions too dense to read.</p><p>Quality depended on whichever linguist was assigned to the title.</p></div>
+        <div class="qbox"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6m-5 3h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2Z"/></svg><h4>Solution</h4></div><p>SDH style guide with sound-event, speaker-ID and CPS rules.</p><p>Audio description scripting and QA checklists shared across vendors.</p><p>Delivery coordination across concurrent titles in PT-BR, EN, FR and ES.</p></div>
+        <div class="qbox is-before"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 9-9M12 7v5l3 2M21 12l-3 3-3-3"/></svg><h4>Before</h4></div><p class="code glitch" style="animation-delay:0.0s">[music]</p><p class="code glitch" style="animation-delay:0.7s">SPEAKER 1: you comin or what</p><p class="code glitch" style="animation-delay:1.4s">[foreign language]</p><p class="note">42 cps · no context · no identity</p></div>
+        <div class="qbox is-after"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6M3 19h6"/></svg><h4>After</h4></div><p class="code rise" style="animation-delay:0.0s">♪ tense synth pulse builds ♪</p><p class="code rise" style="animation-delay:0.15s">DEV: You comin' or what?</p><p class="code rise" style="animation-delay:0.3s">[speaking Portuguese] Não foi culpa dele.</p><p class="note">16 cps · sound as information</p></div>
+      </div>
+      <div class="qbox metrics"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10m6 10V4m6 16v-7m-13 7h17"/></svg><h4>Metrics</h4></div><div class="bar"><div class="bar-row"><span>Support agents served by restructured content</span><b>30k+</b></div><div class="track"><div class="fill" data-w="100"></div></div></div><div class="bar"><div class="bar-row"><span>Reduction in failed information retrieval</span><b>67%</b></div><div class="track"><div class="fill" data-w="67"></div></div></div><div class="bar"><div class="bar-row"><span>Subtitle entries annotated and reviewed</span><b>10k+</b></div><div class="track"><div class="fill" data-w="90"></div></div></div><div class="bar"><div class="bar-row"><span>SDH compliance on delivered titles</span><b>100%</b></div><div class="track"><div class="fill" data-w="100"></div></div></div></div>
+    </div>
+
+    <!-- CASE 3 -->
+    <div class="case-card reveal" style="transition-delay:160ms" onclick="toggleCase('case-3')">
+      <span class="case-n">Case 03</span><h3>Adobe Creative Cloud Localization</h3><p>50K+ words localized, 98% accuracy, 150+ UI issues logged with visual feedback.</p>
+      <span class="open">Open case &darr;</span>
+    </div>
+    <div class="case-expand" id="case-3">
+      <span class="tag" style="margin-bottom:16px;">Case 03 · UI Localization</span>
+      <h2 style="color:var(--white);font-size:clamp(28px,4vw,44px);">Adobe Creative Cloud Localization</h2>
+      <p style="margin:16px 0 8px;color:var(--para);">Broken and inconsistent UI strings across global builds were confusing international users. I combined string-level localization with UX testing and a visual feedback loop that engineers could actually act on.</p>
+      <div class="tags" style="margin-bottom:24px;"><span class="tag">Localization</span><span class="tag">UI/UX Consistency</span><span class="tag">Beta Testing</span><span class="tag">memoQ</span><span class="tag">LQA</span></div>
+      <div class="quad">
+        <div class="qbox"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Zm0 6v5m0 3v.5"/></svg><h4>Problem</h4></div><p>Truncated, untranslated and inconsistent strings across menus, buttons and tooltips.</p><p>Issues reported in prose — slow to reproduce, slower to fix.</p></div>
+        <div class="qbox"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6m-5 3h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2Z"/></svg><h4>Solution</h4></div><p>50K+ words localized against a controlled glossary and screenshot context.</p><p>UX testing split functional bugs from linguistic ones, routed to the right team.</p><p>Annotated screenshots with severity, string ID and expected output.</p></div>
+        <div class="qbox is-before"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 9-9M12 7v5l3 2M21 12l-3 3-3-3"/></svg><h4>Before</h4></div>
+  <div class="bf"><div class="bf-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="url">reports.prod.system/v2-data</span></div>
+  <div class="bf-body"><p class="bf-err">#!404_not_found/789&gt;</p><div class="spinner"></div>
+  <div class="bf-btns"><span>cancelProcess()</span><span>return();</span><span>Go Back</span></div></div></div>
+  <p class="note">Chaotic UI · inconsistent labels · raw code exposed</p></div>
+        <div class="qbox is-after"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6M3 19h6"/></svg><h4>After</h4></div>
+  <div class="bf"><div class="bf-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="url">beta.site.com/test-module</span></div>
+  <div class="bf-body"><p class="bf-title">Beta Test Module V0.9.1</p><p class="bf-sub">Identify potential UX flaws.</p>
+  <div class="bf-btns clean"><span class="primary">Execute process</span><span class="ghost">Cancel process</span></div></div></div>
+  <p class="note">One term per concept · length-checked per locale</p></div>
+      </div>
+      <div class="qbox metrics"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10m6 10V4m6 16v-7m-13 7h17"/></svg><h4>Metrics</h4></div><div class="bar"><div class="bar-row"><span>Localization accuracy through QA and glossary adherence</span><b>98%</b></div><div class="track"><div class="fill" data-w="98"></div></div></div><div class="bar"><div class="bar-row"><span>Words localized for global software builds</span><b>50K+</b></div><div class="track"><div class="fill" data-w="85"></div></div></div><div class="bar"><div class="bar-row"><span>Issues logged with visual feedback</span><b>150+</b></div><div class="track"><div class="fill" data-w="75"></div></div></div><div class="bar"><div class="bar-row"><span>Feedback system adoption</span><b>Company-wide</b></div><div class="track"><div class="fill" data-w="100"></div></div></div></div>
+    </div>
+
+    <!-- CASE 4 -->
+    <div class="case-card reveal" style="transition-delay:240ms" onclick="toggleCase('case-4')">
+      <span class="case-n">Case 04</span><h3>Python Automation for SDH Metadata</h3><p>Scripted metadata structuring cutting formatting time by 70% with 100% consistency.</p>
+      <span class="open">Open case &darr;</span>
+    </div>
+    <div class="case-expand" id="case-4">
+      <span class="tag" style="margin-bottom:16px;">Case 04 · Automation</span>
+      <h2 style="color:var(--white);font-size:clamp(28px,4vw,44px);">Python Automation for SDH Metadata</h2>
+      <p style="margin:16px 0 8px;color:var(--para);">Hours of manual SRT formatting were slowing every delivery. A small Python pipeline now parses, validates and structures SDH metadata in seconds.</p>
+      <div class="tags" style="margin-bottom:24px;"><span class="tag">Python</span><span class="tag">Automation</span><span class="tag">SDH</span><span class="tag">Workflow Design</span></div>
+      <div class="quad">
+        <div class="qbox"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Zm0 6v5m0 3v.5"/></svg><h4>Problem</h4></div><p>Every subtitle file needed manual cleanup: numbering, timecodes, line breaks, tags.</p><p>Inconsistent formatting between files and between linguists.</p></div>
+        <div class="qbox"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6m-5 3h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2Z"/></svg><h4>Solution</h4></div><p>Python script parses SRT entries, validates timecodes and reading rate.</p><p>Structured metadata output feeds QA and delivery without manual steps.</p><p>Shared with the team — no Python knowledge needed to run it.</p></div>
+        <div class="qbox is-before"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 9-9M12 7v5l3 2M21 12l-3 3-3-3"/></svg><h4>Before</h4></div><p class="code glitch" style="animation-delay:0.0s">1 00:00:01, 000 --&gt; 00:00:03.000 [MUSIC]</p><p class="code glitch" style="animation-delay:0.7s">hello WORLD .&lt;i&gt;test&lt;/i&gt; 57cps</p><p class="code glitch" style="animation-delay:1.4s">3 00:00:2,500 → 00:00:04,00</p><p class="note">Broken timecodes · mixed separators</p></div>
+        <div class="qbox is-after"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6M3 19h6"/></svg><h4>After</h4></div><p class="code rise" style="animation-delay:0.0s">1 · 00:00:01,000 → 00:00:03,000 · ♪ music ♪</p><p class="code rise" style="animation-delay:0.15s">2 · 00:00:03,100 → 00:00:05,000 · Hello, world.</p><p class="code rise" style="animation-delay:0.3s">3 · 00:00:05,100 → 00:00:07,200 · 16 cps ✓</p><p class="note">Validated · structured · consistent</p></div>
+      </div>
+      <div class="qbox metrics"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10m6 10V4m6 16v-7m-13 7h17"/></svg><h4>Metrics</h4></div><div class="bar"><div class="bar-row"><span>Time saved on formatting</span><b>70%</b></div><div class="track"><div class="fill" data-w="70"></div></div></div><div class="bar"><div class="bar-row"><span>Formatting consistency across files</span><b>100%</b></div><div class="track"><div class="fill" data-w="100"></div></div></div><div class="bar"><div class="bar-row"><span>Formatting errors after automation</span><b>0</b></div><div class="track"><div class="fill" data-w="100"></div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="collaborations">
+  <div class="sec-head reveal">
+    <span class="tag">Collaborations</span>
+    <h2>Teams and platforms I've worked with.</h2>
+    <p>Streaming, software, telecom and independent studios.</p>
+  </div>
+  <div class="collab-grid">
+    <div class="logo-plate reveal" style="transition-delay:0ms"><img src="https://github.com/alc-etimo/global3/blob/main/Acclaro-Logo2.webp?raw=true" alt="Acclaro" loading="lazy"/></div>
+    <div class="logo-plate reveal" style="transition-delay:50ms"><img src="https://github.com/alc-etimo/global3/blob/main/Iyuno-SDI-Group-Logo.png?raw=true" alt="Iyuno SDI Group" loading="lazy"/></div>
+    <div class="logo-plate reveal" style="transition-delay:100ms"><img src="https://github.com/alc-etimo/global3/blob/main/claro-logo-att%20(2).png?raw=true" alt="Claro" loading="lazy"/></div>
+    <div class="logo-plate reveal" style="transition-delay:150ms"><img src="https://github.com/alc-etimo/global3/blob/main/itc-global-trans.png?raw=true" alt="ITC Global" loading="lazy"/></div>
+    <div class="logo-plate reveal" style="transition-delay:200ms"><img src="https://github.com/alc-etimo/global3/blob/main/moshi-media-trans.png?raw=true" alt="Moshi Media" loading="lazy"/></div>
+    <div class="logo-plate reveal" style="transition-delay:250ms"><img src="https://github.com/alc-etimo/global3/blob/main/saga_logo.webp?raw=true" alt="Saga" loading="lazy"/></div>
+    <div class="logo-plate reveal" style="transition-delay:300ms"><img src="https://github.com/alc-etimo/global3/blob/main/tabuleiro-filmes-logo.png?raw=true" alt="Tabuleiro Filmes" loading="lazy"/></div>
+    <div class="logo-plate reveal" style="transition-delay:350ms"><img src="https://github.com/alc-etimo/global3/blob/main/tropical-dystopia-logo-trans.png?raw=true" alt="Tropical Dystopia" loading="lazy"/></div>
+    <div class="logo-plate reveal" style="transition-delay:400ms"><img src="https://github.com/alc-etimo/global3/blob/main/tw-logo1.png?raw=true" alt="TeamWorker" loading="lazy"/></div>
+    <div class="logo-plate reveal" style="transition-delay:450ms"><img src="https://github.com/alc-etimo/global3/blob/main/vsi-logo.png?raw=true" alt="VSI London" loading="lazy"/></div>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <div class="reveal">
+    <h2>Let's make your content understood everywhere.</h2>
+    <a href="mailto:hello@example.com" class="btn">Get in Touch</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-in">
+    <div class="max">
+      <a class="logo" href="#top"><img src="https://github.com/alc-etimo/global3/blob/main/logo.jfif?raw=true" alt="Ariane Lesnyak logo"/></a>
+      <p>Translation, localization, SDH and closed captions built with linguistic rigor — preserving voice, identity and accessibility across every market.</p>
+    </div>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#case-studies">Case Studies</a></li>
+      <li><a href="#collaborations">Collaborations</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+// navbar scroll
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{if(window.scrollY>60){navbar.style.background='rgba(0,0,0,.92)';navbar.style.backdropFilter='blur(12px)'}else{navbar.style.background='#000';navbar.style.backdropFilter='none'}});
+// hero parallax
+const heroBlocks=document.querySelector('.figure');
+if(heroBlocks){window.addEventListener('scroll',()=>{const s=window.scrollY;heroBlocks.style.animation='none';heroBlocks.style.transform=`rotateX(${46+s*.005}deg) rotateY(${17+s*.008}deg) rotateZ(-3deg) translateY(${s*.05}px)`})}
+// reveal
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// toggle case expansion (âncoras ocultas)
+function toggleCase(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.classList.toggle('open');
+    // Atualiza o texto do link "Open case"
+    const card = el.previousElementSibling;
+    if (card && card.classList.contains('case-card')) {
+      const openSpan = card.querySelector('.open');
+      if (openSpan) {
+        openSpan.textContent = el.classList.contains('open') ? 'Close case ↑' : 'Open case ↓';
+      }
+    }
+    // Anima as barras de progresso quando expandido
+    if (el.classList.contains('open')) {
+      setTimeout(() => {
+        el.querySelectorAll('.fill').forEach(f => f.style.width = f.dataset.w + '%');
+      }, 350);
+    } else {
+      el.querySelectorAll('.fill').forEach(f => f.style.width = '0');
+    }
+  }
+}
+
+// Inicializa o estado dos cases (fechados)
+document.querySelectorAll('.case-expand').forEach(el => {
+  el.classList.remove('open');
+});
+
+// Fecha cases se clicar fora (opcional)
+document.addEventListener('click', function(e) {
+  const isCaseCard = e.target.closest('.case-card');
+  const isCaseExpand = e.target.closest('.case-expand');
+  if (!isCaseCard && !isCaseExpand) {
+    document.querySelectorAll('.case-expand.open').forEach(el => {
+      el.classList.remove('open');
+      const card = el.previousElementSibling;
+      if (card && card.classList.contains('case-card')) {
+        const openSpan = card.querySelector('.open');
+        if (openSpan) openSpan.textContent = 'Open case ↓';
+      }
+      el.querySelectorAll('.fill').forEach(f => f.style.width = '0');
+    });
+  }
+});
+</script>
+</body>
+</html>
