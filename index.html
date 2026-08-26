@@ -18,7 +18,7 @@ a{text-decoration:none;color:inherit}ul{list-style:none}
 /* nav */
 .navbar{position:fixed;top:0;left:0;width:100%;background:#000;padding:12px 40px;display:flex;justify-content:space-between;align-items:center;z-index:999;border-bottom:1px solid rgba(255,255,255,.04);height:72px;transition:all .3s}
 .logo{display:flex;align-items:center;gap:12px}
-.logo img{width:40px;height:40px;object-fit:contain}
+.logo img{width:100px;height:100px;object-fit:contain;background:transparent}
 .nav-links{display:flex;gap:32px}
 .nav-links a{font-size:18px;color:var(--white);position:relative;transition:color .3s}
 .nav-links a:hover{color:var(--accent)}
@@ -74,35 +74,20 @@ footer{border-top:1px solid var(--border);padding:60px 24px;background:#000}
 .footer-in li{margin-top:4px}
 .footer-in a{font-size:16px;color:var(--muted);transition:color .3s}
 .footer-in a:hover{color:var(--accent)}
-/* modal -> agora âncoras ocultas (expansíveis) */
-.case-expand {
-    display: block;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.6s ease, opacity 0.4s ease, padding 0.4s ease;
-    opacity: 0;
-    padding: 0 2rem;
-    background: rgba(11, 29, 57, 0.5);
-    border-radius: 0 0 18px 18px;
-    border: 1px solid transparent;
-}
-.case-expand.open {
-    max-height: 4000px; /* suficiente para todo o conteúdo */
-    opacity: 1;
-    padding: 2rem;
-    border-color: var(--border);
-}
-.case-body {
-    padding: 1.8rem 2rem;
-}
-.case-body > p {
-    font-size: 0.92rem; color: var(--muted); line-height: 1.8;
-    font-family: 'Inter', sans-serif; margin-bottom: 1.3rem;
-}
-.case-body > p strong { color: var(--white); }
-
-/* quad blocks (dentro do expand) */
-.quad{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);z-index:1000;display:none;overflow-y:auto;padding:40px 20px}
+.modal.active{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-card{max-width:1000px;margin:60px auto;background:var(--bg-a);border:1px solid var(--border);border-radius:24px;padding:56px;position:relative;animation:slideUp .45s cubic-bezier(.25,.46,.45,.94)}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+.modal-close{position:absolute;top:20px;right:24px;background:none;border:none;color:var(--muted);font-size:34px;cursor:pointer;line-height:1;transition:color .3s}
+.modal-close:hover{color:var(--white)}
+.modal-card h2{font-size:clamp(32px,4.5vw,56px);line-height:1.06;letter-spacing:-1px;color:var(--white);margin-top:24px;font-weight:500}
+.modal-card .lead{font-size:20px;line-height:1.55;max-width:760px;margin-top:24px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.tags .tag{padding:6px 14px;font-size:12px}
+/* quad blocks */
+.quad{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px}
 .qbox{border:1px solid var(--border);background:var(--card);border-radius:18px;padding:26px;transition:border-color .4s,transform .4s}
 .qbox:hover{border-color:var(--accent);transform:translateY(-3px)}
 .qbox.is-before{border-left:3px solid #ff6b6b}
@@ -142,8 +127,13 @@ footer{border-top:1px solid var(--border);padding:60px 24px;background:#000}
 .bf-btns{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
 .bf-btns span{border:1px solid #ff5e57;color:#ff5e57;border-radius:6px;padding:3px 10px;font-size:11px;font-family:ui-monospace,monospace}
 .bf-btns.clean span{border-radius:8px;padding:8px 16px;font-size:12px;font-family:inherit}
-.bf-btns.clean .primary{background:var(--accent);border-color:var(--accent);color:#fff}
-.bf-btns.clean .ghost{border-color:var(--border);color:var(--para)}
+.bf-btns.clean .primary{background:#1c1d21;border-color:var(--accent);color:#fff}
+.bf-btns.clean .primary:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+.bf-btns.clean .ghost{background:var(--accent);border-color:var(--border);color:var(--para)}
 .bf-title{font-size:15px;font-weight:700;color:var(--white)}
 .bf-sub{font-size:12px;color:var(--muted);margin-top:4px}
 
@@ -156,7 +146,7 @@ footer{border-top:1px solid var(--border);padding:60px 24px;background:#000}
 </head>
 <body>
 <nav class="navbar" id="navbar">
-  <a class="logo" href="#top"><img src="https://github.com/alc-etimo/global3/blob/main/logo.jfif?raw=true" alt="Ariane Lesnyak logo"/></a>
+  <a class="logo" href="#top"><img src="https://github.com/alc-etimo/global3/blob/main/logo-global3.png?raw=true" alt="Ariane Lesnyak logo" style="background:transparent;"/></a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#services">Services</a></li>
@@ -208,94 +198,17 @@ footer{border-top:1px solid var(--border);padding:60px 24px;background:#000}
   <div class="sec-head reveal">
     <span class="tag">Case Studies</span>
     <h2>Four problems, four systems.</h2>
-    <p>Click a case to expand and read the full analysis.</p>
+    <p>Open a case to read the full analysis.</p>
   </div>
-  <div class="case-grid">
-
-    <!-- CASE 1 -->
-    <div class="case-card reveal" style="transition-delay:0ms" onclick="toggleCase('case-1')">
+  <div class="case-grid"><a class="case-card reveal" style="transition-delay:0ms" href="javascript:openCase('case-1')">
       <span class="case-n">Case 01</span><h3>Fidelity vs. Standardization</h3><p>Keeping dialect and identity intact when automated QA flags regional speech as an error.</p>
-      <span class="open">Open case &darr;</span>
-    </div>
-    <div class="case-expand" id="case-1">
-      <span class="tag" style="margin-bottom:16px;">Case 01 · Linguistic Ethics</span>
-      <h2 style="color:var(--white);font-size:clamp(28px,4vw,44px);">Fidelity vs. Standardization</h2>
-      <p style="margin:16px 0 8px;color:var(--para);">Automated QA kept flagging dialect as error. I built the rules that tell a real mistake apart from a character's voice — without breaking glossary or locale compliance.</p>
-      <div class="tags" style="margin-bottom:24px;"><span class="tag">Localization</span><span class="tag">SDH</span><span class="tag">Terminology Governance</span><span class="tag">Error Analysis</span></div>
-      <div class="quad">
-        <div class="qbox"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Zm0 6v5m0 3v.5"/></svg><h4>Problem</h4></div><p>MT and vendor style rules “corrected” regional speech into neutral English.</p><p>Characters lost their accent, brands got translated, EN-UK drifted into EN-US.</p></div>
-        <div class="qbox"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6m-5 3h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2Z"/></svg><h4>Solution</h4></div><p>Added a Language/Local/Dialect category to the error taxonomy.</p><p>Locale-locked projects, whitelisted regional lexicon, protected named entities.</p><p>Every decision documented so vendors could act on it, not argue about it.</p></div>
-        <div class="qbox is-before"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 9-9M12 7v5l3 2M21 12l-3 3-3-3"/></svg><h4>Before</h4></div><p class="code glitch" style="animation-delay:0.0s">“me grandfather” → “my grandfather”</p><p class="code glitch" style="animation-delay:0.7s">“travelling” → “traveling”</p><p class="code glitch" style="animation-delay:1.4s">“Product X Boards” → “Quadros do Produto X”</p><p class="note">Identity flattened · brand broken</p></div>
-        <div class="qbox is-after"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6M3 19h6"/></svg><h4>After</h4></div><p class="code rise" style="animation-delay:0.0s">“me grandfather” — kept, tagged as dialect</p><p class="code rise" style="animation-delay:0.15s">“travelling” — EN-UK locked</p><p class="code rise" style="animation-delay:0.3s">“Product X Boards” — never translated</p><p class="note">Voice preserved · glossary respected</p></div>
-      </div>
-      <div class="qbox metrics"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10m6 10V4m6 16v-7m-13 7h17"/></svg><h4>Metrics</h4></div><div class="bar"><div class="bar-row"><span>Dialect markers preserved after review</span><b>100%</b></div><div class="track"><div class="fill" data-w="100"></div></div></div><div class="bar"><div class="bar-row"><span>False MT corrections blocked before delivery</span><b>320+</b></div><div class="track"><div class="fill" data-w="92"></div></div></div><div class="bar"><div class="bar-row"><span>Terminology consistency across the title set</span><b>98%</b></div><div class="track"><div class="fill" data-w="98"></div></div></div><div class="bar"><div class="bar-row"><span>Vendor disputes resolved with documented evidence</span><b>All</b></div><div class="track"><div class="fill" data-w="100"></div></div></div></div>
-    </div>
-
-    <!-- CASE 2 -->
-    <div class="case-card reveal" style="transition-delay:80ms" onclick="toggleCase('case-2')">
+      <span class="open">Open case &rarr;</span></a><a class="case-card reveal" style="transition-delay:80ms" href="javascript:openCase('case-2')">
       <span class="case-n">Case 02</span><h3>Language Is Access</h3><p>Accessibility-first captions and SDH: sound, speaker identity and reading rate built in from day one.</p>
-      <span class="open">Open case &darr;</span>
-    </div>
-    <div class="case-expand" id="case-2">
-      <span class="tag" style="margin-bottom:16px;">Case 02 · Accessibility</span>
-      <h2 style="color:var(--white);font-size:clamp(28px,4vw,44px);">Language Is Access</h2>
-      <p style="margin:16px 0 8px;color:var(--para);">Captions were treated as transcription. I moved accessibility upstream — sound events, speaker IDs and reading rate designed into the workflow, not patched at QA.</p>
-      <div class="tags" style="margin-bottom:24px;"><span class="tag">Inclusive Communication</span><span class="tag">SDH</span><span class="tag">Audio Description</span><span class="tag">Project Coordination</span></div>
-      <div class="quad">
-        <div class="qbox"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Zm0 6v5m0 3v.5"/></svg><h4>Problem</h4></div><p>Generic “[music]” cues, missing speaker IDs, captions too dense to read.</p><p>Quality depended on whichever linguist was assigned to the title.</p></div>
-        <div class="qbox"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6m-5 3h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2Z"/></svg><h4>Solution</h4></div><p>SDH style guide with sound-event, speaker-ID and CPS rules.</p><p>Audio description scripting and QA checklists shared across vendors.</p><p>Delivery coordination across concurrent titles in PT-BR, EN, FR and ES.</p></div>
-        <div class="qbox is-before"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 9-9M12 7v5l3 2M21 12l-3 3-3-3"/></svg><h4>Before</h4></div><p class="code glitch" style="animation-delay:0.0s">[music]</p><p class="code glitch" style="animation-delay:0.7s">SPEAKER 1: you comin or what</p><p class="code glitch" style="animation-delay:1.4s">[foreign language]</p><p class="note">42 cps · no context · no identity</p></div>
-        <div class="qbox is-after"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6M3 19h6"/></svg><h4>After</h4></div><p class="code rise" style="animation-delay:0.0s">♪ tense synth pulse builds ♪</p><p class="code rise" style="animation-delay:0.15s">DEV: You comin' or what?</p><p class="code rise" style="animation-delay:0.3s">[speaking Portuguese] Não foi culpa dele.</p><p class="note">16 cps · sound as information</p></div>
-      </div>
-      <div class="qbox metrics"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10m6 10V4m6 16v-7m-13 7h17"/></svg><h4>Metrics</h4></div><div class="bar"><div class="bar-row"><span>Support agents served by restructured content</span><b>30k+</b></div><div class="track"><div class="fill" data-w="100"></div></div></div><div class="bar"><div class="bar-row"><span>Reduction in failed information retrieval</span><b>67%</b></div><div class="track"><div class="fill" data-w="67"></div></div></div><div class="bar"><div class="bar-row"><span>Subtitle entries annotated and reviewed</span><b>10k+</b></div><div class="track"><div class="fill" data-w="90"></div></div></div><div class="bar"><div class="bar-row"><span>SDH compliance on delivered titles</span><b>100%</b></div><div class="track"><div class="fill" data-w="100"></div></div></div></div>
-    </div>
-
-    <!-- CASE 3 -->
-    <div class="case-card reveal" style="transition-delay:160ms" onclick="toggleCase('case-3')">
+      <span class="open">Open case &rarr;</span></a><a class="case-card reveal" style="transition-delay:160ms" href="javascript:openCase('case-3')">
       <span class="case-n">Case 03</span><h3>Adobe Creative Cloud Localization</h3><p>50K+ words localized, 98% accuracy, 150+ UI issues logged with visual feedback.</p>
-      <span class="open">Open case &darr;</span>
-    </div>
-    <div class="case-expand" id="case-3">
-      <span class="tag" style="margin-bottom:16px;">Case 03 · UI Localization</span>
-      <h2 style="color:var(--white);font-size:clamp(28px,4vw,44px);">Adobe Creative Cloud Localization</h2>
-      <p style="margin:16px 0 8px;color:var(--para);">Broken and inconsistent UI strings across global builds were confusing international users. I combined string-level localization with UX testing and a visual feedback loop that engineers could actually act on.</p>
-      <div class="tags" style="margin-bottom:24px;"><span class="tag">Localization</span><span class="tag">UI/UX Consistency</span><span class="tag">Beta Testing</span><span class="tag">memoQ</span><span class="tag">LQA</span></div>
-      <div class="quad">
-        <div class="qbox"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Zm0 6v5m0 3v.5"/></svg><h4>Problem</h4></div><p>Truncated, untranslated and inconsistent strings across menus, buttons and tooltips.</p><p>Issues reported in prose — slow to reproduce, slower to fix.</p></div>
-        <div class="qbox"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6m-5 3h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2Z"/></svg><h4>Solution</h4></div><p>50K+ words localized against a controlled glossary and screenshot context.</p><p>UX testing split functional bugs from linguistic ones, routed to the right team.</p><p>Annotated screenshots with severity, string ID and expected output.</p></div>
-        <div class="qbox is-before"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 9-9M12 7v5l3 2M21 12l-3 3-3-3"/></svg><h4>Before</h4></div>
-  <div class="bf"><div class="bf-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="url">reports.prod.system/v2-data</span></div>
-  <div class="bf-body"><p class="bf-err">#!404_not_found/789&gt;</p><div class="spinner"></div>
-  <div class="bf-btns"><span>cancelProcess()</span><span>return();</span><span>Go Back</span></div></div></div>
-  <p class="note">Chaotic UI · inconsistent labels · raw code exposed</p></div>
-        <div class="qbox is-after"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6M3 19h6"/></svg><h4>After</h4></div>
-  <div class="bf"><div class="bf-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="url">beta.site.com/test-module</span></div>
-  <div class="bf-body"><p class="bf-title">Beta Test Module V0.9.1</p><p class="bf-sub">Identify potential UX flaws.</p>
-  <div class="bf-btns clean"><span class="primary">Execute process</span><span class="ghost">Cancel process</span></div></div></div>
-  <p class="note">One term per concept · length-checked per locale</p></div>
-      </div>
-      <div class="qbox metrics"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10m6 10V4m6 16v-7m-13 7h17"/></svg><h4>Metrics</h4></div><div class="bar"><div class="bar-row"><span>Localization accuracy through QA and glossary adherence</span><b>98%</b></div><div class="track"><div class="fill" data-w="98"></div></div></div><div class="bar"><div class="bar-row"><span>Words localized for global software builds</span><b>50K+</b></div><div class="track"><div class="fill" data-w="85"></div></div></div><div class="bar"><div class="bar-row"><span>Issues logged with visual feedback</span><b>150+</b></div><div class="track"><div class="fill" data-w="75"></div></div></div><div class="bar"><div class="bar-row"><span>Feedback system adoption</span><b>Company-wide</b></div><div class="track"><div class="fill" data-w="100"></div></div></div></div>
-    </div>
-
-    <!-- CASE 4 -->
-    <div class="case-card reveal" style="transition-delay:240ms" onclick="toggleCase('case-4')">
+      <span class="open">Open case &rarr;</span></a><a class="case-card reveal" style="transition-delay:240ms" href="javascript:openCase('case-4')">
       <span class="case-n">Case 04</span><h3>Python Automation for SDH Metadata</h3><p>Scripted metadata structuring cutting formatting time by 70% with 100% consistency.</p>
-      <span class="open">Open case &darr;</span>
-    </div>
-    <div class="case-expand" id="case-4">
-      <span class="tag" style="margin-bottom:16px;">Case 04 · Automation</span>
-      <h2 style="color:var(--white);font-size:clamp(28px,4vw,44px);">Python Automation for SDH Metadata</h2>
-      <p style="margin:16px 0 8px;color:var(--para);">Hours of manual SRT formatting were slowing every delivery. A small Python pipeline now parses, validates and structures SDH metadata in seconds.</p>
-      <div class="tags" style="margin-bottom:24px;"><span class="tag">Python</span><span class="tag">Automation</span><span class="tag">SDH</span><span class="tag">Workflow Design</span></div>
-      <div class="quad">
-        <div class="qbox"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Zm0 6v5m0 3v.5"/></svg><h4>Problem</h4></div><p>Every subtitle file needed manual cleanup: numbering, timecodes, line breaks, tags.</p><p>Inconsistent formatting between files and between linguists.</p></div>
-        <div class="qbox"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6m-5 3h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2Z"/></svg><h4>Solution</h4></div><p>Python script parses SRT entries, validates timecodes and reading rate.</p><p>Structured metadata output feeds QA and delivery without manual steps.</p><p>Shared with the team — no Python knowledge needed to run it.</p></div>
-        <div class="qbox is-before"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 9-9M12 7v5l3 2M21 12l-3 3-3-3"/></svg><h4>Before</h4></div><p class="code glitch" style="animation-delay:0.0s">1 00:00:01, 000 --&gt; 00:00:03.000 [MUSIC]</p><p class="code glitch" style="animation-delay:0.7s">hello WORLD .&lt;i&gt;test&lt;/i&gt; 57cps</p><p class="code glitch" style="animation-delay:1.4s">3 00:00:2,500 → 00:00:04,00</p><p class="note">Broken timecodes · mixed separators</p></div>
-        <div class="qbox is-after"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6M3 19h6"/></svg><h4>After</h4></div><p class="code rise" style="animation-delay:0.0s">1 · 00:00:01,000 → 00:00:03,000 · ♪ music ♪</p><p class="code rise" style="animation-delay:0.15s">2 · 00:00:03,100 → 00:00:05,000 · Hello, world.</p><p class="code rise" style="animation-delay:0.3s">3 · 00:00:05,100 → 00:00:07,200 · 16 cps ✓</p><p class="note">Validated · structured · consistent</p></div>
-      </div>
-      <div class="qbox metrics"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10m6 10V4m6 16v-7m-13 7h17"/></svg><h4>Metrics</h4></div><div class="bar"><div class="bar-row"><span>Time saved on formatting</span><b>70%</b></div><div class="track"><div class="fill" data-w="70"></div></div></div><div class="bar"><div class="bar-row"><span>Formatting consistency across files</span><b>100%</b></div><div class="track"><div class="fill" data-w="100"></div></div></div><div class="bar"><div class="bar-row"><span>Formatting errors after automation</span><b>0</b></div><div class="track"><div class="fill" data-w="100"></div></div></div></div>
-    </div>
-  </div>
+      <span class="open">Open case &rarr;</span></a></div>
 </section>
 
 <section id="collaborations">
@@ -321,14 +234,14 @@ footer{border-top:1px solid var(--border);padding:60px 24px;background:#000}
 <section class="cta" id="contact">
   <div class="reveal">
     <h2>Let's make your content understood everywhere.</h2>
-    <a href="mailto:hello@example.com" class="btn">Get in Touch</a>
+    <a href="mailto:ariane.etimo@gmail.com" class="btn">Get in Touch</a>
   </div>
 </section>
 
 <footer>
   <div class="footer-in">
     <div class="max">
-      <a class="logo" href="#top"><img src="https://github.com/alc-etimo/global3/blob/main/logo.jfif?raw=true" alt="Ariane Lesnyak logo"/></a>
+      <a class="logo" href="#top"><img src="https://github.com/alc-etimo/global3/blob/main/logo-global3.png?raw=true" alt="Ariane Lesnyak logo" style="width:150px;height:150px;background:transparent;"/></a>
       <p>Translation, localization, SDH and closed captions built with linguistic rigor — preserving voice, identity and accessibility across every market.</p>
     </div>
     <ul>
@@ -341,6 +254,125 @@ footer{border-top:1px solid var(--border);padding:60px 24px;background:#000}
   </div>
 </footer>
 
+<!-- MODAIS -->
+<div class="modal" id="case-1">
+  <div class="modal-card">
+    <button class="modal-close" aria-label="Close case study" onclick="closeCase('case-1')">&times;</button>
+    <span class="tag">Case 01 · Linguistic Ethics</span>
+    <h2>Fidelity vs. Standardization</h2>
+    <p class="lead">Automated QA kept flagging dialect as error. I built the rules that tell a real mistake apart from a character's voice — without breaking glossary or locale compliance.</p>
+    <div class="tags"><span class="tag">Localization</span><span class="tag">SDH</span><span class="tag">Terminology Governance</span><span class="tag">Error Analysis</span></div>
+    <div class="quad">
+      <div class="qbox"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Zm0 6v5m0 3v.5"/></svg><h4>Problem</h4></div><p>MT and vendor style rules “corrected” regional speech into neutral English.</p><p>Characters lost their accent, brands got translated, EN-UK drifted into EN-US.</p></div>
+      <div class="qbox"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6m-5 3h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2Z"/></svg><h4>Solution</h4></div><p>Added a Language/Local/Dialect category to the error taxonomy.</p><p>Locale-locked projects, whitelisted regional lexicon, protected named entities.</p><p>Every decision documented so vendors could act on it, not argue about it.</p></div>
+      <div class="qbox is-before"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 9-9M12 7v5l3 2M21 12l-3 3-3-3"/></svg><h4>Before</h4></div><p class="code glitch" style="animation-delay:0.0s">“me grandfather” → “my grandfather”</p><p class="code glitch" style="animation-delay:0.7s">“travelling” → “traveling”</p><p class="code glitch" style="animation-delay:1.4s">“Product X Boards” → “Quadros do Produto X”</p><p class="note">Identity flattened · brand broken</p></div>
+      <div class="qbox is-after"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6M3 19h6"/></svg><h4>After</h4></div><p class="code rise" style="animation-delay:0.0s">“me grandfather” — kept, tagged as dialect</p><p class="code rise" style="animation-delay:0.15s">“travelling” — EN-UK locked</p><p class="code rise" style="animation-delay:0.3s">“Product X Boards” — never translated</p><p class="note">Voice preserved · glossary respected</p></div>
+    </div>
+    <div class="qbox metrics"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10m6 10V4m6 16v-7m-13 7h17"/></svg><h4>Metrics</h4></div><div class="bar"><div class="bar-row"><span>Dialect markers preserved after review</span><b>100%</b></div>
+         <div class="track"><div class="fill" data-w="100"></div></div></div><div class="bar"><div class="bar-row"><span>False MT corrections blocked before delivery</span><b>320+</b></div>
+         <div class="track"><div class="fill" data-w="92"></div></div></div><div class="bar"><div class="bar-row"><span>Terminology consistency across the title set</span><b>98%</b></div>
+         <div class="track"><div class="fill" data-w="98"></div></div></div><div class="bar"><div class="bar-row"><span>Vendor disputes resolved with documented evidence</span><b>All</b></div>
+         <div class="track"><div class="fill" data-w="100"></div></div></div></div>
+    <div class="modal-back"><a href="#case-studies" class="btn" onclick="closeCase('case-1')">&larr; Back to case studies</a></div>
+  </div>
+</div>
+
+<div class="modal" id="case-2">
+  <div class="modal-card">
+    <button class="modal-close" aria-label="Close case study" onclick="closeCase('case-2')">&times;</button>
+    <span class="tag">Case 02 · Accessibility</span>
+    <h2>Language Is Access</h2>
+    <p class="lead">Captions were treated as transcription. I moved accessibility upstream — sound events, speaker IDs and reading rate designed into the workflow, not patched at QA.</p>
+    <div class="tags"><span class="tag">Inclusive Communication</span><span class="tag">SDH</span><span class="tag">Audio Description</span><span class="tag">Project Coordination</span></div>
+    <div class="quad">
+      <div class="qbox"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Zm0 6v5m0 3v.5"/></svg><h4>Problem</h4></div><p>Generic “[music]” cues, missing speaker IDs, captions too dense to read.</p><p>Quality depended on whichever linguist was assigned to the title.</p></div>
+      <div class="qbox"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6m-5 3h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2Z"/></svg><h4>Solution</h4></div><p>SDH style guide with sound-event, speaker-ID and CPS rules.</p><p>Audio description scripting and QA checklists shared across vendors.</p><p>Delivery coordination across concurrent titles in PT-BR, EN, FR and ES.</p></div>
+      <div class="qbox is-before"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 9-9M12 7v5l3 2M21 12l-3 3-3-3"/></svg><h4>Before</h4></div><p class="code glitch" style="animation-delay:0.0s">[music]</p><p class="code glitch" style="animation-delay:0.7s">SPEAKER 1: you comin or what</p><p class="code glitch" style="animation-delay:1.4s">[foreign language]</p><p class="note">42 cps · no context · no identity</p></div>
+      <div class="qbox is-after"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6M3 19h6"/></svg><h4>After</h4></div><p class="code rise" style="animation-delay:0.0s">♪ tense synth pulse builds ♪</p><p class="code rise" style="animation-delay:0.15s">DEV: You comin' or what?</p><p class="code rise" style="animation-delay:0.3s">[speaking Portuguese] Não foi culpa dele.</p><p class="note">16 cps · sound as information</p></div>
+    </div>
+    <div class="qbox metrics"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10m6 10V4m6 16v-7m-13 7h17"/></svg><h4>Metrics</h4></div><div class="bar"><div class="bar-row"><span>Support agents served by restructured content</span><b>30k+</b></div>
+         <div class="track"><div class="fill" data-w="100"></div></div></div><div class="bar"><div class="bar-row"><span>Reduction in failed information retrieval</span><b>67%</b></div>
+         <div class="track"><div class="fill" data-w="67"></div></div></div><div class="bar"><div class="bar-row"><span>Subtitle entries annotated and reviewed</span><b>10k+</b></div>
+         <div class="track"><div class="fill" data-w="90"></div></div></div><div class="bar"><div class="bar-row"><span>SDH compliance on delivered titles</span><b>100%</b></div>
+         <div class="track"><div class="fill" data-w="100"></div></div></div></div>
+    <div class="modal-back"><a href="#case-studies" class="btn" onclick="closeCase('case-2')">&larr; Back to case studies</a></div>
+  </div>
+</div>
+
+<div class="modal" id="case-3">
+  <div class="modal-card">
+    <button class="modal-close" aria-label="Close case study" onclick="closeCase('case-3')">&times;</button>
+    <span class="tag">Case 03 · UI Localization</span>
+    <h2>Adobe Creative Cloud Localization</h2>
+    <p class="lead">Broken and inconsistent UI strings across global builds were confusing international users. I combined string-level localization with UX testing and a visual feedback loop that engineers could actually act on.</p>
+    <div class="tags"><span class="tag">Localization</span><span class="tag">UI/UX Consistency</span><span class="tag">Beta Testing</span><span class="tag">memoQ</span><span class="tag">LQA</span></div>
+    <div class="quad">
+      <div class="qbox"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Zm0 6v5m0 3v.5"/></svg><h4>Problem</h4></div><p>Truncated, untranslated and inconsistent strings across menus, buttons and tooltips.</p><p>Issues reported in prose — slow to reproduce, slower to fix.</p></div>
+      <div class="qbox"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6m-5 3h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2Z"/></svg><h4>Solution</h4></div><p>50K+ words localized against a controlled glossary and screenshot context.</p><p>UX testing split functional bugs from linguistic ones, routed to the right team.</p><p>Annotated screenshots with severity, string ID and expected output.</p></div>
+      <div class="qbox is-before"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 9-9M12 7v5l3 2M21 12l-3 3-3-3"/></svg><h4>Before</h4></div>
+<div class="bf"><div class="bf-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="url">reports.prod.system/v2-data</span></div>
+<div class="bf-body"><p class="bf-err">#!404_not_found/789&gt;</p><div class="spinner"></div>
+<div class="bf-btns"><span>cancelProcess()</span><span>return();</span><span>Go Back</span></div></div></div>
+<p class="note">Chaotic UI · inconsistent labels · raw code exposed</p></div>
+      <div class="qbox is-after">
+    <div class="qhead">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 12.5 9.5 18 20 6M3 19h6"/>
+        </svg>
+        <h4>After</h4>
+    </div>
+    <div class="bf">
+        <div class="bf-head">
+            <span class="dot r"></span>
+            <span class="dot y"></span>
+            <span class="dot g"></span>
+            <span class="url">beta.site.com/test-module</span>
+        </div>
+        <div class="bf-body">
+            <!-- O texto que você quer que apareça inicialmente -->
+            <p>Beta Test Module V0.9.1</p>
+                <p>Identify potential UX flaws.</p>
+<p class="bf-title" id="adobe-after-text"></p>
+            <div class="bf-btns clean">
+                <!-- O botão que vai mudar no hover -->
+                <span class="primary" id="adobe-hover-btn" onmouseover="this.innerText='Execute Process';" onmouseout="this.innerText='&lt;/134&gt;_Execute_Process_Final&lt;/456&gt;';">&lt;/134&gt;_Execute_Process_Final&lt;/456&gt;</span>
+                
+            </div>
+        </div>
+    </div>
+    <p class="note">One term per concept · length-checked per locale</p>
+</div>
+    </div>
+    <div class="qbox metrics"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10m6 10V4m6 16v-7m-13 7h17"/></svg><h4>Metrics</h4></div><div class="bar"><div class="bar-row"><span>Localization accuracy through QA and glossary adherence</span><b>98%</b></div>
+         <div class="track"><div class="fill" data-w="98"></div></div></div><div class="bar"><div class="bar-row"><span>Words localized for global software builds</span><b>50K+</b></div>
+         <div class="track"><div class="fill" data-w="85"></div></div></div><div class="bar"><div class="bar-row"><span>Issues logged with visual feedback</span><b>150+</b></div>
+         <div class="track"><div class="fill" data-w="75"></div></div></div><div class="bar"><div class="bar-row"><span>Feedback system adoption</span><b>Company-wide</b></div>
+         <div class="track"><div class="fill" data-w="100"></div></div></div></div>
+    <div class="modal-back"><a href="#case-studies" class="btn" onclick="closeCase('case-3')">&larr; Back to case studies</a></div>
+  </div>
+</div>
+
+<div class="modal" id="case-4">
+  <div class="modal-card">
+    <button class="modal-close" aria-label="Close case study" onclick="closeCase('case-4')">&times;</button>
+    <span class="tag">Case 04 · Automation</span>
+    <h2>Python Automation for SDH Metadata</h2>
+    <p class="lead">Hours of manual SRT formatting were slowing every delivery. A small Python pipeline now parses, validates and structures SDH metadata in seconds.</p>
+    <div class="tags"><span class="tag">Python</span><span class="tag">Automation</span><span class="tag">SDH</span><span class="tag">Workflow Design</span></div>
+    <div class="quad">
+      <div class="qbox"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Zm0 6v5m0 3v.5"/></svg><h4>Problem</h4></div><p>Every subtitle file needed manual cleanup: numbering, timecodes, line breaks, tags.</p><p>Inconsistent formatting between files and between linguists.</p></div>
+      <div class="qbox"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6m-5 3h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2Z"/></svg><h4>Solution</h4></div><p>Python script parses SRT entries, validates timecodes and reading rate.</p><p>Structured metadata output feeds QA and delivery without manual steps.</p><p>Shared with the team — no Python knowledge needed to run it.</p></div>
+      <div class="qbox is-before"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 9-9M12 7v5l3 2M21 12l-3 3-3-3"/></svg><h4>Before</h4></div><p class="code glitch" style="animation-delay:0.0s">1 00:00:01, 000 --&gt; 00:00:03.000 [MUSIC]</p><p class="code glitch" style="animation-delay:0.7s">hello WORLD .&lt;i&gt;test&lt;/i&gt; 57cps</p><p class="code glitch" style="animation-delay:1.4s">3 00:00:2,500 → 00:00:04,00</p><p class="note">Broken timecodes · mixed separators</p></div>
+      <div class="qbox is-after"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6M3 19h6"/></svg><h4>After</h4></div><p class="code rise" style="animation-delay:0.0s">1 · 00:00:01,000 → 00:00:03,000 · ♪ music ♪</p><p class="code rise" style="animation-delay:0.15s">2 · 00:00:03,100 → 00:00:05,000 · Hello, world.</p><p class="code rise" style="animation-delay:0.3s">3 · 00:00:05,100 → 00:00:07,200 · 16 cps ✓</p><p class="note">Validated · structured · consistent</p></div>
+    </div>
+    <div class="qbox metrics"><div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10m6 10V4m6 16v-7m-13 7h17"/></svg><h4>Metrics</h4></div><div class="bar"><div class="bar-row"><span>Time saved on formatting</span><b>70%</b></div>
+         <div class="track"><div class="fill" data-w="70"></div></div></div><div class="bar"><div class="bar-row"><span>Formatting consistency across files</span><b>100%</b></div>
+         <div class="track"><div class="fill" data-w="100"></div></div></div><div class="bar"><div class="bar-row"><span>Formatting errors after automation</span><b>0</b></div>
+         <div class="track"><div class="fill" data-w="100"></div></div></div></div>
+    <div class="modal-back"><a href="#case-studies" class="btn" onclick="closeCase('case-4')">&larr; Back to case studies</a></div>
+  </div>
+</div>
+
 <script>
 // navbar scroll
 const navbar=document.getElementById('navbar');
@@ -352,51 +384,13 @@ if(heroBlocks){window.addEventListener('scroll',()=>{const s=window.scrollY;hero
 const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// toggle case expansion (âncoras ocultas)
-function toggleCase(id) {
-  const el = document.getElementById(id);
-  if (el) {
-    el.classList.toggle('open');
-    // Atualiza o texto do link "Open case"
-    const card = el.previousElementSibling;
-    if (card && card.classList.contains('case-card')) {
-      const openSpan = card.querySelector('.open');
-      if (openSpan) {
-        openSpan.textContent = el.classList.contains('open') ? 'Close case ↑' : 'Open case ↓';
-      }
-    }
-    // Anima as barras de progresso quando expandido
-    if (el.classList.contains('open')) {
-      setTimeout(() => {
-        el.querySelectorAll('.fill').forEach(f => f.style.width = f.dataset.w + '%');
-      }, 350);
-    } else {
-      el.querySelectorAll('.fill').forEach(f => f.style.width = '0');
-    }
-  }
-}
-
-// Inicializa o estado dos cases (fechados)
-document.querySelectorAll('.case-expand').forEach(el => {
-  el.classList.remove('open');
-});
-
-// Fecha cases se clicar fora (opcional)
-document.addEventListener('click', function(e) {
-  const isCaseCard = e.target.closest('.case-card');
-  const isCaseExpand = e.target.closest('.case-expand');
-  if (!isCaseCard && !isCaseExpand) {
-    document.querySelectorAll('.case-expand.open').forEach(el => {
-      el.classList.remove('open');
-      const card = el.previousElementSibling;
-      if (card && card.classList.contains('case-card')) {
-        const openSpan = card.querySelector('.open');
-        if (openSpan) openSpan.textContent = 'Open case ↓';
-      }
-      el.querySelectorAll('.fill').forEach(f => f.style.width = '0');
-    });
-  }
-});
+// case modals
+function openCase(id){const m=document.getElementById(id);m.classList.add('active');document.body.style.overflow='hidden';
+  m.querySelectorAll('.rise').forEach((el,i)=>{el.style.animation='none';void el.offsetWidth;el.style.animation=''});
+  setTimeout(()=>m.querySelectorAll('.fill').forEach(f=>f.style.width=f.dataset.w+'%'),350);}
+function closeCase(id){const m=document.getElementById(id);m.classList.remove('active');document.body.style.overflow='';m.querySelectorAll('.fill').forEach(f=>f.style.width='0');}
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeCase(m.id)}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal.active').forEach(m=>closeCase(m.id))});
 </script>
 </body>
 </html>
